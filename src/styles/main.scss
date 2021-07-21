@@ -1,0 +1,29 @@
+@use 'variables' as v;
+@import url("https://use.typekit.net/ypd6rkj.css");
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	color: v.$text-1;
+	font-family: Halcom, 'Helvetica', 'Segoe-UI', sans-serif;
+	font-weight: 300;
+}
+
+// Default styles
+section, header{
+	padding: 3em;
+}
+
+// Reusable styles
+.center-flex{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.fh{ //Full height
+	height: 100vh;
+	min-height: 500px;
+}
