@@ -1,11 +1,14 @@
 @use 'variables' as v;
 
 // Boids
-$boids-fill: rgba(255,255,255,.2);
-:root{
-	--boids-fill: $boids-fill;
-}
-
 header{
 	background: linear-gradient(v.$bg-1, v.$bg-2);
+}
+#boids-canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#header-text-cont{
+	color: white;
 }

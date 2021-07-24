@@ -10,11 +10,15 @@ body{
 	color: v.$text-1;
 	font-family: Halcom, 'Helvetica', 'Segoe-UI', sans-serif;
 	font-weight: 300;
+	font-size: 17pt;
 }
 
 // Default styles
 section, header{
 	padding: 3em;
+}
+h1{
+	font-size: 400%;
 }
 
 // Reusable styles
