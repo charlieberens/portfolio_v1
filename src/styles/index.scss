@@ -1,8 +1,9 @@
 @use 'variables' as v;
 
 // Boids
-header{
+body{
 	background: linear-gradient(v.$bg-1, v.$bg-2);
+	color: white;
 }
 #boids-canvas{
 	position: absolute;
@@ -10,5 +11,21 @@ header{
 	left: 0;
 }
 #header-text-cont{
-	color: white;
+	z-index: 3;
+	padding-right: 800px;
+}
+#raymarch-canvas-cont{
+	position: fixed;
+	top:0;
+	left: 0;
+	z-index: -1;
+}
+section{
+	display: flex;
+	align-items: center;
+	height: 100vh;
+	min-height: 800px;
+}
+.section-main{
+	padding-right: 800px;
 }
