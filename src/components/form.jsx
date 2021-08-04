@@ -15,6 +15,12 @@ export default class Form extends Component {
     onSubmit = e => {
         e.preventDefault();
 
+        if(this.state.phone || this.state.email){
+
+        }else{
+            
+        }
+
         console.log(this.state);
     }
     
