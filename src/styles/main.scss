@@ -12,6 +12,14 @@ body{
 	font-weight: 300;
 	font-size: 17pt;
 }
+*::placeholder{
+	color: inherit;
+	font-family: inherit;
+}
+a{
+	color: inherit;
+	text-decoration: inherit;
+}
 
 // Default styles
 section, header{
@@ -19,6 +27,10 @@ section, header{
 }
 h1{
 	font-size: 400%;
+}
+p:nth-child(n + 1){
+	margin-top: 1em;
+	line-height: 1.4em;
 }
 
 // Reusable styles

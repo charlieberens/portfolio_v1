@@ -23,9 +23,117 @@ body{
 section{
 	display: flex;
 	align-items: center;
-	height: 100vh;
-	min-height: 800px;
+	min-height: 100vh;
+	// height: 800px;
 }
 .section-main{
-	padding-right: 800px;
+	padding-right: 50%;
+}
+
+// About
+#about-skills-cont-alligner{
+	display: flex;
+	justify-content: center;
+	max-width: 600px;
+	
+	#about-skills-cont{
+		width: 100%;
+		margin-top: 2rem;
+		display: grid;
+		font-size: 60pt;
+		grid-template-columns: repeat(auto-fit, calc(60pt + 2rem));
+	
+		svg{
+			margin-bottom: 2rem;
+		}
+	}
+}
+
+// Projects
+.project{
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 1.25em;
+	display: flex;
+	margin-top: 1.5em;
+	background: linear-gradient(v.$bg-1, v.$bg-2);
+	align-items: center;
+
+	.project-img{
+		height: 150px;
+		border-radius: 5px;
+		margin-right: 1em;
+	}
+	.project-title{
+		margin-bottom: .25em;
+	}
+	.project-right{
+		display: flex;
+		flex-flow: column;
+		justify-content: space-between;
+	}
+	.project-tech-cont{
+		margin-top: 1rem;
+		font-size: 25pt;
+		svg{
+			margin-right: .75rem;
+		}
+	}
+}
+
+// Contact
+#contact-form {
+	display: flex;
+	flex-flow: column;
+	margin-top: 2em;
+
+	input, textarea{
+	   background: none;
+	   padding: 1.25em 1em;
+	   color: white;
+	   border: 1px solid white;
+	   border-radius: 3px;
+	   margin-bottom: 2em;
+	   max-width: 400px;
+	   opacity: .7;
+
+	   &:focus{
+		opacity: 1;
+	}
+		&.submit{
+			background: white;
+			max-width: 100px;
+			width: 100%;
+			color: black;
+			opacity: 1;
+			cursor: pointer;
+		}
+   }
+   textarea{
+	min-width: 400px;
+	min-height: 125px;
+   }
+}
+
+//Footer
+footer{
+	padding: 1.25em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	#footer-name{
+		font-size: 15pt;
+	}
+	#footer-sm-cont{
+		a{
+			font-size: 23pt;
+			opacity: .7;
+			margin-right: .75rem;
+	
+			&:hover{
+				opacity: 1;
+			}
+		}
+	}
 }

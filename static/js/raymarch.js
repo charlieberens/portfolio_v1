@@ -44,14 +44,16 @@ if(typeof window !== 'undefined' && window.document) {
               deMaxThreshold: {value: 1000},
               glowThreshold: {value: 5},
               bgColor: {value: new THREE.Vector4(.1,.1,.1,1)},
+              shapePos: {value: new THREE.Vector3(width/4, 0, 1100)},
+              shapeSize: {value: 250},
               lightRayPos: {value: new THREE.Vector3(300, -300, 600)},
               lightRayDir: {value: new THREE.Vector3(1, -1, 1)},
               lightRayColor: {value: new THREE.Vector4(.8,.8,.8, 1.1)}, //r,g,b,strength
               lightFalloffDistance: {value: 1300},
               shadowThreshold: {value: 25},
               shadowStength: {value: .8}, //Lower is darker
-              mousePos: {value: new THREE.Vector3(800, 1800, 1300)},
-              shapeSize: {value: 400},
+              mousePos: {value: new THREE.Vector3(800, 1800, 1100)},
+              mouseRatios: {value: new THREE.Vector2(0, 0)}, //(x/z, y/z) Calculated here so i'ts only calculated once per frame not, one per pixel for frame
               scrollVal: {value: 0},
               width: {value: width},
               height: {value: height},
@@ -80,9 +82,10 @@ if(typeof window !== 'undefined' && window.document) {
       function render() {
           requestAnimationFrame(render);
           renderer.render(scene, camera);
-          mesh.material.uniforms.mousePos.value = new THREE.Vector3(mouse[0], mouse[1], 1300);
+          mesh.material.uniforms.mousePos.value = new THREE.Vector3(mouse[0], mouse[1], mesh.material.uniforms.mousePos.value.z);
+          mesh.material.uniforms.mouseRatios.value = new THREE.Vector2(Math.atan2(mouse[0], mesh.material.uniforms.planeDistance.value), Math.atan2(mouse[1], mesh.material.uniforms.planeDistance.value));
           mesh.material.uniforms.scrollVal.value = scroll / window.innerHeight;
-        //   mesh.material.uniforms.time.value += .05;
+          mesh.material.uniforms.time.value += .5;
         //   console.log(mesh.material.uniforms.time.value)
       }
       render();
