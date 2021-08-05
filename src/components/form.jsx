@@ -66,6 +66,7 @@ export default class Form extends Component {
             .then(res => {
                 this.state({success: true});
             }).catch(err => {
+                console.log({err})
                 this.setState({err: 'An unknown error occured, please try again or email me at charliejberens@gmail.com'})
         });
     }
