@@ -9,7 +9,7 @@ export default function RaymarchCanvas() {
             </div>
             <Helmet>
                 <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js' type="text/javascript"></script>
-                <script src={withPrefix('js/raymarch.js')} defer='true' type="text/javascript"></script>
+                <script src={withPrefix('js/raymarch.js')} type="text/javascript"></script>
             </Helmet>
         </>
     )

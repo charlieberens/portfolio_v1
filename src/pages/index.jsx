@@ -72,6 +72,7 @@ const IndexPage = () => {
         </div>
       </div>
       {/* <SEO title="Charlie Berens" /> */}
+      <RaymarchCanvas/>
       <header className="center-flex fh rayt-sec" id="boids-header">
         <div id="header-center" class="section-main">
           {/* <BoidsCanvas/> */}
@@ -80,11 +81,10 @@ const IndexPage = () => {
             <h1>Charlie Berens</h1>
             <span>I build things for the web</span>
           </div>
-          <RaymarchCanvas/>
         </div>
       </header>
       <Fade left duration={850} distance="100px">
-        <section class="rayt-sec">
+        <section class="rayt-sec fade">
           <div className="section-main left">
             <div className="section-side">
               <h2>About Me</h2>
@@ -111,7 +111,7 @@ const IndexPage = () => {
         </section>
       </Fade>
       <Fade left duration={850} distance="100px">
-        <section class="rayt-sec">
+        <section class="rayt-sec fade">
           <div className="section-main left">
             <div className="section-side">
               <h2>My projects</h2>
@@ -139,7 +139,7 @@ const IndexPage = () => {
         </section>
       </Fade>
       <Fade left duration={850} distance="100px">
-        <section class="rayt-sec">
+        <section class="rayt-sec fade">
           <div className="section-main left">
             <div className="section-side">
               <h2>Get in touch</h2>
