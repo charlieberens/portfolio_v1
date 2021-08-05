@@ -61,7 +61,7 @@ export default class Form extends Component {
         return (
             <>
                 {!this.state.success ? 
-                    <form id="contact-form" onSubmit={this.onSubmit}>
+                    <form id="contact-form" onSubmit={this.onSubmit} data-netlify='true'>
                         {this.state.err && <span id="form-err">{this.state.err}</span>}
                         <input type="text" name="name" placeholder="Name" onChange={this.onChange}/>
                         <input type="text" name="email" placeholder="Email" onChange={this.onChange}/>
