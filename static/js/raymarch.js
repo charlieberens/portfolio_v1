@@ -28,8 +28,8 @@ if(typeof window !== 'undefined' && window.document) {
         camera.top = -height / 2;
         camera.bottom = -height / 2;
 
-        mesh.material.uniforms.width.value = width;
-        mesh.material.uniforms.height.value = height;
+        mesh.material.uniforms.width.value = !mobile ? width : width /4;
+        mesh.material.uniforms.height.value = !mobile ? height : height /4;
 
         mesh.material.uniforms.shapePos.value = new THREE.Vector3(width > mobileBreak ? width/4 : 0, 0, 1100);
 
