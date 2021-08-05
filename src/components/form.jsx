@@ -48,7 +48,7 @@ export default class Form extends Component {
 
     submitForm = () => {
         const axiosOptions = {
-            url: '/',
+            url: window.location.href,
             method: "post",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             data: qs.stringify({
