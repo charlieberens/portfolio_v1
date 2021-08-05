@@ -1,4 +1,4 @@
-if(typeof window !== 'undefined' && window.document) {
+if(typeof window !== 'undefined' && window.document && !/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   fetch('fragment.glsl')
     .then(response => response.text())
     .then((data) => {
