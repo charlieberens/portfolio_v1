@@ -19,6 +19,7 @@ uniform float lightFalloffDistance;
 uniform float shadowThreshold;
 uniform float shadowStength;
 
+uniform bool mouseExists;
 uniform vec3 mousePos;
 uniform vec2 mouseRatios;
 uniform float scrollVal;
@@ -38,7 +39,6 @@ vec3 rotateVector(vec3 vec, vec3 rot){ //https://stackoverflow.com/questions/146
 }
 
 float cylinderDist(vec3 vec, vec3 pos, float height, float rad, float cornerRad, vec3 rot){
-    // vec3 centerDist = rotateVector(vec - pos, rot);
     vec3 centerDist = rotateVector(vec - pos, rot);
 
     vec2 dist = abs(vec2(length(centerDist.xz), centerDist.y)) - vec2(rad * 2.0, height);
@@ -86,43 +86,57 @@ float boxDist(vec3 vec, vec3 pos, vec3 dim, vec3 rot){
     return length(vec3(max(cornerDist.x, 0.0), max(cornerDist.y, 0.0), max(cornerDist.z, 0.0))) - 0.0;
 }
 
+float frameDist(vec3 vec, vec3 pos, vec3 dim, float thickness, vec3 rot){
+    vec3 centerDist = rotateVector(vec - pos, rot);
+    vec3 cornerDist = abs(centerDist) - dim;
+    vec3 q = abs(cornerDist+thickness) - thickness;
+
+    return min(min(
+        length(max(vec3(cornerDist.x,q.y,q.z),0.0))+min(max(cornerDist.x,max(q.y,q.z)),0.0),
+        length(max(vec3(q.x,cornerDist.y,q.z),0.0))+min(max(q.x,max(cornerDist.y,q.z)),0.0)),
+        length(max(vec3(q.x,q.y,cornerDist.z),0.0))+min(max(q.x,max(q.y,cornerDist.z)),0.0)
+    );
+}
+
 float sceneDist(vec3 vec){
-
-
-    // float box1 = boxDist(vec, vec3(-150.0,-150.0,1400.0), vec3(200.0, 200.0, 200.0), vec3(0,time / 400.0,time / 800.0));
-
     float sphere1 = sphereDist(vec, vec3(mouseRatios.x * mousePos.z, mouseRatios.y * mousePos.z, mousePos.z), 75.0);
 
     float shape;
     float shape1;
     float shape2;
-    if(scrollVal < .5){
+    if(scrollVal < .25){
         shape = octohedronDist(vec, shapePos, shapeSize, vec3(0,time / 100.0,time / 200.0));
     }else if(scrollVal < .75){
-        float fraction = (scrollVal - .5) * 4.0;
+        float fraction = (scrollVal - .25) * 2.0;
         float oppFraction = 1.0 - fraction;
         shape1 = octohedronDist(vec, shapePos, shapeSize * oppFraction, vec3(0,time / 100.0,time / 200.0));
         shape2 = boxDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), vec3(3,time / 75.0,time / 220.0));
         shape = smin(shape1, shape2, 200.0);
     }else if(scrollVal < 1.25){
         shape = boxDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time / 75.0,time / 220.0));
-        // shape = boxDist(vec, vec3(600,0,1500.0), .5 * vec3(shapeSize, shapeSize, shapeSize), vec3(0,-.75,0));
-    }else if(scrollVal < 1.5){
-        float fraction = (scrollVal - 1.25) * 4.0;
+    }else if(scrollVal < 1.75){
+        float fraction = (scrollVal - 1.25) * 2.0;
         float oppFraction = 1.0 - fraction;
         shape1 = boxDist(vec, shapePos, .5 * oppFraction * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time / 75.0,time / 220.0));
-        shape2 = torusDist(vec, shapePos, shapeSize * fraction * .5, 75.0 * fraction, vec3(time / 75.0,time / 125.0,time / 200.0));
+        shape2 = torusDist(vec, shapePos, shapeSize * fraction * .5, 75.0 * fraction, vec3(time / 75.0,0,time / 60.0));
+        shape = smin(shape1, shape2, 200.0);
+    }else if(scrollVal < 2.25){
+        shape = torusDist(vec, shapePos, shapeSize * .5, 75.0, vec3(time / 75.0,0,time / 60.0));
+    }else if(scrollVal < 2.75){
+        float fraction = (scrollVal - 2.25) * 2.0;
+        float oppFraction = 1.0 - fraction;
+        shape1 = torusDist(vec, shapePos, shapeSize * oppFraction * .5, 75.0 * oppFraction, vec3(time / 75.0,0,time / 60.0));
+        shape2 = frameDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), fraction * 20.0, vec3(time / 25.0,15,time / 100.0));
         shape = smin(shape1, shape2, 200.0);
     }else{
-        shape = torusDist(vec, shapePos, shapeSize * .5, 75.0, vec3(time / 75.0,time / 125.0,time / 200.0));
+        shape = frameDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), 20.0, vec3(time / 25.0,15,time / 100.0));
     }
-
-    // float plane1 = planeDist(vec);
-    // float octohedron2 = octohedronDist(vec, vec3(350,-250,1400.0), 250.0, vec3(time / 200.0, 0,time / 100.0));
-    // float octohedron3 = octohedronDist(vec, vec3(-350,-250,1400.0), 250.0, vec3(time / 200.0,time / 100.0, 0));
-    // float cylinder1 = cylinderDist(vec, vec3(350.0,30,1600.0), 200.0, 100.0, 10.0, vec3(0,time / 120.0,time / 60.0));
-
-    return smin(shape, sphere1, 200.0);
+    if(mouseExists){
+        float sphere1 = sphereDist(vec, vec3(mouseRatios.x * mousePos.z, mouseRatios.y * mousePos.z, mousePos.z), 75.0);
+        return smin(shape, sphere1, 200.0);
+    }else{
+        return(shape);
+    }
 }
 
 vec3 calcNormal(vec3 vec){
@@ -155,11 +169,6 @@ void main(){
 
     if(de <= deMinThreshold){
         // March towards lightsource
-        // vec3 normalLightRay = normalize(lightRayPos);
-        // while(distance(ray, lightRayPos) < deMinThreshold){
-
-        // }
-
         vec3 unitCameraRay = calcNormal(ray);
         vec3 unitLightRayDir = normalize(lightRayDir);
         vec3 unitDirToLight = normalize(lightRayPos - ray);
@@ -184,8 +193,8 @@ void main(){
 
         // lightRayDiff = max(lightRayDiff * lightRayDiff * lightRayDiff, lightRayDiff / 2.5);
 
-        // float lightRayStrength = lightRayColor[3] / max(lightRayColor.x, max(lightRayColor.y, lightRayColor.z));
-        float lightRayStrength = 1.0;
+        float lightRayStrength = lightRayColor[3] / max(lightRayColor.x, max(lightRayColor.y, lightRayColor.z));
+        // float lightRayStrength = 1.0;
         // gl_FragColor = min(lightFalloffDistance / distance(ray, lightRayPos), 1.0) * vec4(lightRayDiff * lightRayColor.x * lightRayStrength, lightRayDiff * lightRayColor.y * lightRayStrength, lightRayDiff * lightRayColor.z * lightRayStrength, 1.0);
         gl_FragColor = min(lightFalloffDistance / distance(ray, lightRayPos), 1.0) * vec4(max(abs(ray.x) / 150.0, .7) * lightRayDiff * lightRayColor.x * lightRayStrength, max(abs(ray.y) / 200.0, .7) * lightRayDiff * lightRayColor.y * lightRayStrength, max(abs(ray.z) / 1000.0, .7) * lightRayDiff * lightRayColor.z * lightRayStrength, 1.0);
         // gl_FragColor = vec4(lightRayDiff, lightRayDiff, lightRayDiff, 1.0);
@@ -202,12 +211,9 @@ void main(){
                 gl_FragColor = (1.0 - (((1.0 - shadowStength )* (1.0 - light_power)))) * gl_FragColor;
             }
         }
-        // gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     }else if(minDist < glowThreshold){
         gl_FragColor = vec4(1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0);
     }else{
-        // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
         discard;
-        // gl_FragColor = vec4(minDist / 30.0 + .1, minDist / 30.0 + .2, 1, .2);
     }
 }
