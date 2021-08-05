@@ -47,16 +47,19 @@ export default class Form extends Component {
     }
 
     submitForm = () => {
+        let data = {
+            name: this.state.name,
+            email: this.state.email,
+            phone: this.state.phone,
+            message: this.state.message
+        }
+        data['form-name'] = 'contact-form';
+
         const axiosOptions = {
             url: window.location.href,
             method: "post",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            data: qs.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                phone: this.state.phone,
-                message: this.state.message
-            }),
+            data: qs.stringify(data),
         }
 
         axios(axiosOptions)
