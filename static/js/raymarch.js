@@ -7,11 +7,12 @@ if(typeof window !== 'undefined' && window.document) {
       }`;
   
       const mobile = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const mobileScaleFactor = 2;
 
       const fragmentShader = data;
   
-      let width = window.innerWidth;
-      let height = window.innerHeight;
+      let width = !mobile ? window.innerWidth : window.innerWidth / mobileScaleFactor;
+      let height = !mobile ? window.innerHeight : window.innerHeight / mobileScaleFactor;
   
       const scene = new THREE.Scene();
       const camera = new THREE.OrthographicCamera(-width / 2, width / 2, height / 2, -height / 2, 1, 500);
@@ -20,23 +21,27 @@ if(typeof window !== 'undefined' && window.document) {
       renderer.setClearColor(0x00000,0);
       renderer.setSize( width, height );
       window.addEventListener('resize', () => {
-        width = window.innerWidth;
-        height = window.innerHeight;
-
+        width = !mobile ? window.innerWidth : window.innerWidth / mobileScaleFactor;
+        height = !mobile ? window.innerHeight : window.innerHeight / mobileScaleFactor;
+  
         camera.left = -width / 2;
         camera.right = -width / 2;
         camera.top = -height / 2;
         camera.bottom = -height / 2;
 
-        mesh.material.uniforms.width.value = !mobile ? width : width /4;
-        mesh.material.uniforms.height.value = !mobile ? height : height /4;
+        mesh.material.uniforms.width.value = width;
+        mesh.material.uniforms.height.value = height;
 
-        mesh.material.uniforms.shapePos.value = new THREE.Vector3(width > mobileBreak ? width/4 : 0, 0, 1100);
+        mesh.material.uniforms.shapePos.value = new THREE.Vector3(window.innerWidth > mobileBreak ? width/mobileScaleFactor : 0, 0, 1100);
 
         renderer.setSize( width, height );
       }, false);
   
       document.getElementById('raymarch-canvas-cont').appendChild(renderer.domElement);
+      if(mobile){
+        document.getElementsByTagName('canvas')[0].style.transform = `scale(${mobileScaleFactor}, ${mobileScaleFactor}) translate(25%, 25%)`;
+        document.getElementsByTagName('canvas')[0].style.border = '1px solid red';
+      }
       
       const geometry = new THREE.PlaneGeometry(width, height);
       // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
@@ -48,20 +53,20 @@ if(typeof window !== 'undefined' && window.document) {
               deMaxThreshold: {value: 1000},
               glowThreshold: {value: 5},
               bgColor: {value: new THREE.Vector4(.1,.1,.1,1)},
-              shapePos: {value: new THREE.Vector3(width > mobileBreak ? width/4 : 0, 0, 1100)},
-              shapeSize: {value: 250},
+              shapePos: {value: new THREE.Vector3(window.innerWidth > mobileBreak ? width/mobileScaleFactor : 0, 0, 1100)},
+              shapeSize: {value: !mobile ? 250 : 250/mobileScaleFactor},
               lightRayPos: {value: new THREE.Vector3(300, -300, 600)},
               lightRayDir: {value: new THREE.Vector3(1, -1, 1)},
               lightRayColor: {value: new THREE.Vector4(.8,.8,.8, 1.1)}, //r,g,b,strength
               lightFalloffDistance: {value: 1300},
               shadowThreshold: {value: 25},
               shadowStength: {value: .8}, //Lower is darker
-              mouseExists: {value: width > mobileBreak},
+              mouseExists: {value: !mobile},
               mousePos: {value: new THREE.Vector3(800, 1800, 1100)},
               mouseRatios: {value: new THREE.Vector2(0, 0)}, //(x/z, y/z) Calculated here so i'ts only calculated once per frame not, one per pixel for frame
               scrollVal: {value: 0},
-              width: {value: !mobile ? width : width /4},
-              height: {value: !mobile ? height : height /4},
+              width: {value: width},
+              height: {value: height},
               time: {value: 23}
           },
           vertexShader,
