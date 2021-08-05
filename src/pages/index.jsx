@@ -120,7 +120,7 @@ const IndexPage = () => {
               </p>
               <div className="projects-cont">
                 {projects.map(project => 
-                  <a className="project" href={project.link}>
+                  <a key={project.title} className="project" href={project.link}>
                     <img className="project-img" src={withPrefix(`images/projects/${project.img}`)} alt={`Preview of ${project.title}`}/>
                     <div className="project-right">
                       <div>

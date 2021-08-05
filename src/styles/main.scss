@@ -39,13 +39,8 @@ p:nth-child(n + 1){
 	line-height: 1.4em;
 }
 ::-webkit-scrollbar {
-	width: 5px;
-}
-::-webkit-scrollbar-track {
-	background: linear-gradient(v.$bg-1, v.$bg-2);
-}  
-::-webkit-scrollbar-thumb{
-	background: rgba(255,255,255,.05);
+	width: 0px;
+	background: transparent;
 }
 
 // Reusable styles
