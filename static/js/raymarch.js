@@ -6,6 +6,8 @@ if(typeof window !== 'undefined' && window.document) {
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }`;
   
+      const mobile = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
       const fragmentShader = data;
   
       let width = window.innerWidth;
@@ -58,8 +60,8 @@ if(typeof window !== 'undefined' && window.document) {
               mousePos: {value: new THREE.Vector3(800, 1800, 1100)},
               mouseRatios: {value: new THREE.Vector2(0, 0)}, //(x/z, y/z) Calculated here so i'ts only calculated once per frame not, one per pixel for frame
               scrollVal: {value: 0},
-              width: {value: width},
-              height: {value: height},
+              width: {value: !mobile ? width : width /4},
+              height: {value: !mobile ? height : height /4},
               time: {value: 23}
           },
           vertexShader,
