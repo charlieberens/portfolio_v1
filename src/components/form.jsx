@@ -55,8 +55,6 @@ export default class Form extends Component {
         }
         data['form-name'] = 'contact-form';
 
-        console.log({data})
-
         const axiosOptions = {
             url: window.location.href,
             method: "post",
@@ -68,7 +66,6 @@ export default class Form extends Component {
             .then(res => {
                 this.setState({success: true});
             }).catch(err => {
-                console.log({err})
                 this.setState({err: 'An unknown error occured, please try again or email me at charliejberens@gmail.com'})
         });
     }
