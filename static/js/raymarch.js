@@ -117,6 +117,11 @@ if(typeof window !== 'undefined' && window.document && !/Android|webOS|iPhone|iP
         }
       }
       render();
-      console.log(mesh.material.uniforms.shapePos.value);
+  });
+}else{
+  document.getElementsByTagName('body')[0].classList.add('loaded');
+  document.getElementById('loading-overlay').classList.add('loaded');
+  document.getElementById('loading-overlay').addEventListener("transitionend", function() {
+    this.style.display = "none";
   });
 }
