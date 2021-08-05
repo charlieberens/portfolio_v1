@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import axios from "axios"
+import * as qs from "query-string"
 
 export default class Form extends Component {
     constructor(props){
@@ -45,16 +47,24 @@ export default class Form extends Component {
     }
 
     submitForm = () => {
-        fetch('/', {
-            method: 'POST',
-            headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            body: {
+        const axiosOptions = {
+            url: '/',
+            method: "post",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            data: qs.stringify({
                 name: this.state.name,
                 email: this.state.email,
                 phone: this.state.phone,
                 message: this.state.message
-            }
-        }).then(() => this.setState({success: true}))
+            }),
+        }
+
+        axios(axiosOptions)
+            .then(res => {
+                this.state({success: true});
+            }).catch(err => {
+                this.setState({err: 'An unknown error occured, please try again or email me at charliejberens@gmail.com'})
+        });
     }
     
     render() {
