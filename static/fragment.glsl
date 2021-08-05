@@ -215,5 +215,6 @@ void main(){
         gl_FragColor = vec4(1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0);
     }else{
         discard;
+        // gl_FragColor = vec4(1.0,0.0,0.0,1.0);
     }
 }

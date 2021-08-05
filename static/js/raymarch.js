@@ -40,7 +40,6 @@ if(typeof window !== 'undefined' && window.document) {
       document.getElementById('raymarch-canvas-cont').appendChild(renderer.domElement);
       if(mobile){
         document.getElementsByTagName('canvas')[0].style.transform = `scale(${mobileScaleFactor}, ${mobileScaleFactor}) translate(25%, 25%)`;
-        document.getElementsByTagName('canvas')[0].style.border = '1px solid red';
       }
       
       const geometry = new THREE.PlaneGeometry(width, height);
@@ -118,5 +117,6 @@ if(typeof window !== 'undefined' && window.document) {
         }
       }
       render();
+      console.log(mesh.material.uniforms.shapePos.value);
   });
 }
