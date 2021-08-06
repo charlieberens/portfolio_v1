@@ -10,6 +10,7 @@ import Form from '../components/form';
 import '../styles/main.scss';
 import '../styles/index.scss';
 import { withPrefix, SEO } from "gatsby";
+import Helmet from "react-helmet";
 
 // data
 const projects = [
