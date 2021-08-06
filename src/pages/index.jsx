@@ -64,6 +64,11 @@ const projects = [
 const IndexPage = () => {
   return (
     <main>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Charlie Berens</title>
+        <link rel="canonical" href="https://charlieberens.org" />
+      </Helmet>
       <div id="loading-overlay">
         <div id="loading-spinner">
           <div class="loading-spinner-dot"></div>
