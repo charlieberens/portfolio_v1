@@ -89,9 +89,9 @@ const IndexPage = () => {
             <div className="section-side">
               <h2>About Me</h2>
               <p>
-                I am a 17 year old High School senior from Salt Lake City, UT. Computer Science is my passion. 
+                I'm a High School senior from Salt Lake City, UT. Whether it's analyzing the association between temeprature and covid cases or creating an app to assign questions to my students, I love using code to solve problems.
               </p>
-              <p>I started coding when I was 12, so needless to say I have acquired a few skills. Here are a few of my favorites </p>
+              <p>I started programming when I was 12, so needless to say I have acquired a few skills. Here are some of my favorites:</p>
               <div id="about-skills-cont-alligner">
                 <div id="about-skills-cont">
                   <SiNodeDotJs title="NodeJS"/>

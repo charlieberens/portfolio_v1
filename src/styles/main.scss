@@ -5,6 +5,11 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+
+	::placeholder{
+		color: inherit;
+		font-family: Halcom, 'Helvetica', 'Segoe-UI', sans-serif;
+	}
 }
 body{
 	color: v.$text-1;
@@ -15,10 +20,6 @@ body{
 		font-size: 13pt;
 	}
 }
-*::placeholder{
-	color: inherit;
-	font-family: Halcom, 'Helvetica', 'Segoe-UI', sans-serif;
-}
 a{
 	color: inherit;
 	text-decoration: inherit;
@@ -27,16 +28,19 @@ a{
 // Default styles
 section, header{
 	padding: 3em;
-	@media screen and (max-width: v.$mobile-break-s){
+	@media screen and (max-width: v.$mobile-break-m){
 		padding: 2em;
 	}
 }
 h1{
 	font-size: 400%;
 }
-p:nth-child(n + 1){
-	margin-top: 1em;
+p{
 	line-height: 1.4em;
+
+	&:nth-child(n + 1){
+		margin-top: 1em;
+	}	
 }
 ::-webkit-scrollbar {
 	width: 0px;
