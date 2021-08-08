@@ -22,7 +22,7 @@ const projects = [
       <SiJquery title="JQuery"/>,
     ],
     img: 'spotify-filterer.png',
-    link: 'https://www.charlieberens.org/playlistmaker/'
+    link: 'https://www.songfilter.app'
   },
   {
     title: "Tutorease",
@@ -34,7 +34,7 @@ const projects = [
       <SiJavascript title="Javascript"/>,
     ],
     img: 'tutorease.png',
-    link: 'https://tutorease.herokuapp.com/'
+    link: 'https://www.tutorease.org'
   },
   {
     title: "Go Travel Sites",
@@ -48,7 +48,7 @@ const projects = [
   },
   {
     title: "This website",
-    text: "My web design portfolio",
+    text: "My web design portfolio that includes a raymarching renderer",
     technologies: [
       <SiWebgl title="WebGL & Three.js"/>,
       <SiReact title="React"/>,
