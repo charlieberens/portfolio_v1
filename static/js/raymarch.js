@@ -1,12 +1,8 @@
-console.log('bbbbb');
 window.onload = () => {
-  console.log('555');
   if(typeof window !== 'undefined' && window.document && !/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    console.log('666');
     fetch('fragment.glsl')
       .then(response => response.text())
       .then((data) => {
-        console.log('aaaaa');
         const vertexShader = `void main(){
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }`;
@@ -41,10 +37,8 @@ window.onload = () => {
         }, false);
   
         const geometry = new THREE.PlaneGeometry(width, height);
-        // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         const mobileBreak = 850;
 
-        console.log('GGG');
         let material = new THREE.ShaderMaterial({
             uniforms: {
                 planeDistance: {value: 800}, //Distance from camera to the pixel rectangle
@@ -71,7 +65,6 @@ window.onload = () => {
             vertexShader,
             fragmentShader
         });
-        console.log('HHH');
 
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
@@ -132,9 +125,7 @@ window.onload = () => {
             firstRender = false;
           }
         }
-        console.log('ccccc');
         render();
-        console.log('dddd');
     });
   }else{
     document.getElementsByTagName('body')[0].classList.add('loaded');

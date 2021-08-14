@@ -83,7 +83,7 @@ const IndexPage = () => {
           {/* <BoidsCanvas/> */}
           <div id="header-text-cont">
             <span>Hey I'm</span>
-            <h1>Charlie Berens</h1>
+            <h1>Test Berens</h1>
             <span>I build things for the web</span>
           </div>
         </div>
