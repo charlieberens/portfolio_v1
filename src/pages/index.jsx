@@ -1,5 +1,4 @@
 import * as React from "react";
-import BoidsCanvas from '../components/boids_canvas.jsx';
 import RaymarchCanvas from '../components/raymarch_canvas.jsx';
 import { SiNodeDotJs, SiTypescript, SiReact, SiGatsby, SiMongodb, SiVueDotJs, SiFlask, SiPython, SiSass, SiJava, SiJavascript, SiHtml5, SiCss3, SiWebgl, SiJquery, SiGithub, SiTwitter } from "react-icons/si";
 import { HiMail } from "react-icons/hi";
@@ -21,7 +20,7 @@ const projects = [
       <SiJavascript title="Javascript"/>,
       <SiJquery title="JQuery"/>,
     ],
-    img: 'spotify-filterer.png',
+    img: 'spotify-filterer.webp',
     link: 'https://www.songfilter.app'
   },
   {
@@ -33,7 +32,7 @@ const projects = [
       <SiMongodb title="MongoDB"/>,
       <SiJavascript title="Javascript"/>,
     ],
-    img: 'tutorease.png',
+    img: 'tutorease.webp',
     link: 'https://www.tutorease.org'
   },
   {
@@ -43,7 +42,7 @@ const projects = [
       <SiVueDotJs title="Vue.JS"/>,
       <SiJavascript title="Javascript"/>,
     ],
-    img: 'gotravelsites.png',
+    img: 'gotravelsites.webp',
     link: 'https://cbtestbed.dreamhosters.com/gts-redesign/index'
   },
   {
@@ -56,7 +55,7 @@ const projects = [
       <SiJavascript title="Javascript"/>,
       <SiSass title="SASS"/>
     ],
-    img: 'portfolio_v1.png',
+    img: 'portfolio_v1.webp',
     link: 'https://charlieberens.org'
   },
 ]
@@ -127,7 +126,7 @@ const IndexPage = () => {
               <div className="projects-cont">
                 {projects.map(project => 
                   <a key={project.title} className="project" href={project.link}>
-                    <img className="project-img" src={withPrefix(`images/projects/${project.img}`)} alt={`Preview of ${project.title}`}/>
+                    <img className="project-img" src={withPrefix(`images/projects/compressed/${project.img}`)} alt={`Preview of ${project.title}`}/>
                     <div className="project-right">
                       <div>
                         <h3 className="project-title">{project.title}</h3>

@@ -105,31 +105,31 @@ float sceneDist(vec3 vec){
     float shape1;
     float shape2;
     if(scrollVal < .25){
-        shape = octohedronDist(vec, shapePos, shapeSize, vec3(0,time / 100.0,time / 200.0));
+        shape = octohedronDist(vec, shapePos, shapeSize, vec3(0,time,time / 2.0));
     }else if(scrollVal < .75){
         float fraction = (scrollVal - .25) * 2.0;
         float oppFraction = 1.0 - fraction;
-        shape1 = octohedronDist(vec, shapePos, shapeSize * oppFraction, vec3(0,time / 100.0,time / 200.0));
-        shape2 = boxDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), vec3(3,time / 75.0,time / 220.0));
+        shape1 = octohedronDist(vec, shapePos, shapeSize * oppFraction, vec3(0,time,time / 2.0));
+        shape2 = boxDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), vec3(3,time * 1.5,time / 2.0));
         shape = smin(shape1, shape2, 200.0);
     }else if(scrollVal < 1.25){
-        shape = boxDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time / 75.0,time / 220.0));
+        shape = boxDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time * 1.5,time / 2.0));
     }else if(scrollVal < 1.75){
         float fraction = (scrollVal - 1.25) * 2.0;
         float oppFraction = 1.0 - fraction;
-        shape1 = boxDist(vec, shapePos, .5 * oppFraction * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time / 75.0,time / 220.0));
-        shape2 = torusDist(vec, shapePos, shapeSize * fraction * .5, 75.0 * fraction, vec3(time / 75.0,0,time / 60.0));
+        shape1 = boxDist(vec, shapePos, .5 * oppFraction * vec3(shapeSize, shapeSize, shapeSize), vec3(3,time * 1.5,time / 2.0));
+        shape2 = torusDist(vec, shapePos, shapeSize * fraction * .5, 75.0 * fraction, vec3(time * .75,0,time * 2.0));
         shape = smin(shape1, shape2, 200.0);
     }else if(scrollVal < 2.25){
-        shape = torusDist(vec, shapePos, shapeSize * .5, 75.0, vec3(time / 75.0,0,time / 60.0));
+        shape = torusDist(vec, shapePos, shapeSize * .5, 75.0, vec3(time * .75,0,time * 2.0));
     }else if(scrollVal < 2.75){
         float fraction = (scrollVal - 2.25) * 2.0;
         float oppFraction = 1.0 - fraction;
-        shape1 = torusDist(vec, shapePos, shapeSize * oppFraction * .5, 75.0 * oppFraction, vec3(time / 75.0,0,time / 60.0));
-        shape2 = frameDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), fraction * 20.0, vec3(time / 25.0,15,time / 100.0));
+        shape1 = torusDist(vec, shapePos, shapeSize * oppFraction * .5, 75.0 * oppFraction, vec3(time * .75,0,time * 2.0));
+        shape2 = frameDist(vec, shapePos, .5 * vec3((shapeSize * fraction),(shapeSize * fraction),(shapeSize * fraction)), fraction * 20.0, vec3(time * 2.0,15,time));
         shape = smin(shape1, shape2, 200.0);
     }else{
-        shape = frameDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), 20.0, vec3(time / 25.0,15,time / 100.0));
+        shape = frameDist(vec, shapePos, .5 * vec3(shapeSize, shapeSize, shapeSize), 20.0, vec3(time * 2.0,15,time));
     }
     if(mouseExists){
         float sphere1 = sphereDist(vec, vec3(mouseRatios.x * mousePos.z, mouseRatios.y * mousePos.z, mousePos.z), 75.0);
@@ -190,22 +190,13 @@ void main(){
             lightCount += 1;
         }
         float lightRayDiff = acos(dot(unitCameraRay, -unitDirToLight)) / (PI);
-
-        // lightRayDiff = max(lightRayDiff * lightRayDiff * lightRayDiff, lightRayDiff / 2.5);
-
         float lightRayStrength = lightRayColor[3] / max(lightRayColor.x, max(lightRayColor.y, lightRayColor.z));
-        // float lightRayStrength = 1.0;
-        // gl_FragColor = min(lightFalloffDistance / distance(ray, lightRayPos), 1.0) * vec4(lightRayDiff * lightRayColor.x * lightRayStrength, lightRayDiff * lightRayColor.y * lightRayStrength, lightRayDiff * lightRayColor.z * lightRayStrength, 1.0);
         gl_FragColor = min(lightFalloffDistance / distance(ray, lightRayPos), 1.0) * vec4(max(abs(ray.x) / 150.0, .7) * lightRayDiff * lightRayColor.x * lightRayStrength, max(abs(ray.y) / 200.0, .7) * lightRayDiff * lightRayColor.y * lightRayStrength, max(abs(ray.z) / 1000.0, .7) * lightRayDiff * lightRayColor.z * lightRayStrength, 1.0);
-        // gl_FragColor = vec4(lightRayDiff, lightRayDiff, lightRayDiff, 1.0);
         if(dot(unitCameraRay, -unitDirToLight) <= 0.0){
-            // gl_FragColor = vec4(0.0,1.0,1.0,1.0);
         }
-        // gl_FragColor = min(lightFalloffDistance / distance(ray, lightRayPos), 1.0) * vec4(lightRayDiff * lightRayColor.x * lightRayStrength * min(float(count) / 5.0, 1.0), lightRayDiff * lightRayColor.y * lightRayStrength * min(float(count) / 10.0, 1.0), lightRayDiff * lightRayColor.z * lightRayStrength * min(float(count) / 15.0, 1.0), 1.0);
         if(cam_de <= deMinThreshold){
             gl_FragColor = shadowStength * gl_FragColor;
         }else{
-            // gl_FragColor = vec4(.9,.9,.9,1.0);
             if(min_cam_de < shadowThreshold){
                 float light_power = min_cam_de/shadowThreshold;
                 gl_FragColor = (1.0 - (((1.0 - shadowStength )* (1.0 - light_power)))) * gl_FragColor;
@@ -215,6 +206,5 @@ void main(){
         gl_FragColor = vec4(1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0 - minDist / glowThreshold, 1.0);
     }else{
         discard;
-        // gl_FragColor = vec4(1.0,0.0,0.0,1.0);
     }
 }

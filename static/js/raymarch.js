@@ -1,8 +1,12 @@
+console.log('bbbbb');
 window.onload = () => {
+  console.log('555');
   if(typeof window !== 'undefined' && window.document && !/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    console.log('666');
     fetch('fragment.glsl')
       .then(response => response.text())
       .then((data) => {
+        console.log('aaaaa');
         const vertexShader = `void main(){
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }`;
@@ -39,6 +43,8 @@ window.onload = () => {
         const geometry = new THREE.PlaneGeometry(width, height);
         // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         const mobileBreak = 850;
+
+        console.log('GGG');
         let material = new THREE.ShaderMaterial({
             uniforms: {
                 planeDistance: {value: 800}, //Distance from camera to the pixel rectangle
@@ -60,12 +66,13 @@ window.onload = () => {
                 scrollVal: {value: 0},
                 width: {value: width},
                 height: {value: height},
-                time: {value: 23}
+                time: {value: 0}
             },
             vertexShader,
             fragmentShader
         });
-    
+        console.log('HHH');
+
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
     
@@ -84,8 +91,20 @@ window.onload = () => {
   
         let firstRender = true;
   
+        const frameCap = 60;
+        const invFrameCap = 1 / frameCap;
+        let clock = new THREE.Clock();      
+        let dt = 0;
+
+        const rotSpeed = .5;
+
         function render() {
-            requestAnimationFrame(render);
+            dt = clock.getDelta();
+
+            setTimeout(() => {
+                requestAnimationFrame(render);
+            }, dt < invFrameCap ? (invFrameCap - dt) * 1000 : 0);
+
             renderer.render(scene, camera);
             mesh.material.uniforms.mousePos.value = new THREE.Vector3(mouse[0], mouse[1], mesh.material.uniforms.mousePos.value.z);
             mesh.material.uniforms.mouseRatios.value = new THREE.Vector2(Math.atan2(mouse[0], mesh.material.uniforms.planeDistance.value), Math.atan2(mouse[1], mesh.material.uniforms.planeDistance.value));
@@ -93,6 +112,7 @@ window.onload = () => {
             let scroll = document.documentElement.scrollTop;
             let scrolledPastCount = 0;
             let i = 0;
+ 
             while(i < sections.length){
               if(sections[i].getBoundingClientRect().top <= 0 ){ //Sections that have been scrolled past
                 scrolledPastCount += 1;
@@ -101,8 +121,8 @@ window.onload = () => {
               i++;
             }
             mesh.material.uniforms.scrollVal.value = (-currentSection.getBoundingClientRect().top) / currentSection.offsetHeight + scrolledPastCount - 1;
-            
-            mesh.material.uniforms.time.value += .5;
+            mesh.material.uniforms.time.value += dt * rotSpeed;
+
           if(firstRender){
             document.getElementsByTagName('body')[0].classList.add('loaded');
             document.getElementById('loading-overlay').classList.add('loaded');
@@ -112,7 +132,9 @@ window.onload = () => {
             firstRender = false;
           }
         }
+        console.log('ccccc');
         render();
+        console.log('dddd');
     });
   }else{
     document.getElementsByTagName('body')[0].classList.add('loaded');
