@@ -94,9 +94,9 @@ const IndexPage = () => {
             <div className="section-side">
               <h2>About Me</h2>
               <p>
-                I'm a High School senior from Salt Lake City, UT. Whether it's analyzing the association between temeprature and covid cases or creating an app to assign questions to my students, I love using code to solve problems.
+                I'm a High School senior from Salt Lake City, UT. Whether it's analyzing the association between temperature and COVID cases or creating an app to assign questions to my students, I love sloving problems with code.
               </p>
-              <p>I started programming when I was 12, so needless to say I have acquired a few skills. Here are some of my favorites:</p>
+              <p>I started programming when I was 11, so needless to say I have acquired a few skills. Here are some of my favorites:</p>
               <div id="about-skills-cont-alligner">
                 <div id="about-skills-cont">
                   <SiNodeDotJs title="NodeJS"/>
@@ -121,7 +121,7 @@ const IndexPage = () => {
             <div className="section-side">
               <h2>My projects</h2>
               <p>
-                Though I have been building things for the web since I was 12, I didn't create anything decent until 2019. Here are a few projects I'm proud of:
+                Though I have been building things for the web since I was 11, I didn't create anything decent until 2019. Here are a few projects I'm proud of:
               </p>
               <div className="projects-cont">
                 {projects.map(project => 
